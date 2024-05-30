@@ -66,59 +66,59 @@ In the initial data preparation phase, I performed the following tasks;
 
    EDA involved exploring the data to answer various stakeholders' questions;
 
-     1. What is the gender breakdown of employees in the company?
+     **1. What is the gender breakdown of employees in the company?**
 
    - ![014](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/98c3cb46-981f-41a3-9be9-1f9ad4b484b1)
      
 
-     2. What is the race/ethnicity breakdown of employees in the company?
+     **2. What is the race/ethnicity breakdown of employees in the company?**
     
         - ![015](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/7740d00a-c96d-4588-aa8a-912d0d53010e)
           
        
-     3. What is the age distribution of employees in the company?
+     **3. What is the age distribution of employees in the company?**
     
         - ![016](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/a8798dc4-9ba3-407c-a459-fd0f37d1cc79)
        
         - ![017](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/3d38d47b-ee25-4a69-84ff-9fb3d9721101)
 
        
-     4. How many employees work at headquarters versus remote locations?
+     **4. How many employees work at headquarters versus remote locations?**
     
         -  ![018](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/65cba034-253a-492f-b12b-d2500fbaa426)
        
        
-     5. What is the average length of employment for employees who have been terminated?
+     **5. What is the average length of employment for employees who have been terminated?**
     
         - ![019](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/653f7bf0-3be5-47e0-9fde-b770ec1da28f)
        
        
-     6. How does gender distribution vary across departments and job titles?
+     **6. How does gender distribution vary across departments and job titles?**
     
         - ![020](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/df0c72c6-e767-4285-9e2e-a22c1ef8a6c9)
 
 
-     7. What is the distribution of job titles across the company?
+     **7. What is the distribution of job titles across the company?**
     
         - ![021](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/221d2cbe-74d1-4018-b930-5f371ceeade0)
 
      
-     8. Which department has the highest turnover rate?
+     **8. Which department has the highest turnover rate?**
     
         -  ![022](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/0633512a-e0ba-4ece-9e5d-c51e8a36c18c)
        
        
-     9. What is the distribution of employees across locations by state?
+     **9. What is the distribution of employees across locations by state?**
     
         -  ![023](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/6c3e7ca5-bc94-4189-9a5b-7d439a72bec6)
 
 
-     10. How has the company's employee count changed over time based on hire and term dates?
+     **10. How has the company's employee count changed over time based on hire and term dates?**
     
         -  ![024](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/8341325e-b1da-469d-bfa1-f09efbc54c4f)
     
 
-     11.  What is the tenure ditribution for each department?
+     **11.  What is the tenure ditribution for each department?**
     
         -  ![025](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/af31265b-7de6-4242-940f-6917583d781f)
 

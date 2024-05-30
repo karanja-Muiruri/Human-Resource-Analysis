@@ -66,7 +66,7 @@ In the initial data preparation phase, I performed the following tasks;
 
    EDA involved exploring the data to answer various stakeholders' questions;
 
-     **1. What is the gender breakdown of employees in the company?**
+   **1. What is the gender breakdown of employees in the company?**
 
    - ![014](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/98c3cb46-981f-41a3-9be9-1f9ad4b484b1)
      

@@ -1,4 +1,4 @@
-# Human-Resource-Analysis.
+# Human-Resource-Analysis - SQL.
 
 ## Table of Contents
  - [Project Overview](#project-overview)

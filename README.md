@@ -9,11 +9,11 @@
 
 ## Project Overview
 
-I use MySQL in MySQL Workbench 8.0 CE to analyze the Human Resource.csv data to answer various questions.
+I use MySQL in MySQL Workbench 8.0 CE to analyze the Human Resource.csv data to reveal key human resource insights that can significantly benefit the company, highlight critical HR metrics such as employee turnover, diversity, recruitment effectiveness, and performance evaluations. They assist HR professionals in making well-informed decisions and in strategic workforce planning.
 
 ## Data Sources
 
- - 'Human Resources.csv'
+ - 'Human Resources.csv' containing 22,000 Human Resource records from year 2000 to year 2020. 
 
 ## Tools Used
 
@@ -25,11 +25,16 @@ In the initial data preparation phase, I performed the following tasks;
 
    - Create a database called Human_Resources and import the 'Human Resources.csv' using Table Data Import Wizard.
 
+
+         CREATE DATABASE Human_Resource;
+     
+         
+
      - ![001](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/831dae8a-2445-440a-8101-3ecbf084864c)
     
-     - ![002](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/c3f49194-c6ae-4acf-8568-6287f199ab85)
+
     
-     - ![003](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/84596756-d310-4538-a056-0c415a5fc569)
+    
     
 
 - Changed column 'i>>?id to emp_id;

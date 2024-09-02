@@ -34,12 +34,22 @@ In the initial data preparation phase, I performed the following tasks;
     
 
     
-    
+         USE Human_Resource;
+
+
+         SELECT *
+         FROM hr;
+         
     
 
 - Changed column 'i>>?id to emp_id;
 
-  - ![004](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/0a8c988a-935f-42ec-974d-d84ed72cfd07)
+
+
+         ALTER table hr
+         CHANGE COLUMN  ï>>¿id emp_id VARCHAR(20) NULL;
+
+  
 
 - Using UPDATE and CASE, together with str_to_date() function to convert the str in the 'birthdate' column to a date value and also used date_format() to change the date format from '%m/%d/%Y' to '%Y-%m-%d'. Also I modified the 'birthdate' column data type from text to DATE. 
 

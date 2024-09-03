@@ -33,46 +33,124 @@ In the initial data preparation phase, I performed the following tasks;
      - ![001](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/831dae8a-2445-440a-8101-3ecbf084864c)
     
 
-    
-         USE Human_Resource;
 
 
-         SELECT *
-         FROM hr;
+
+
+
+
+
+
+   
+    USE Human_Resource;
+
+     
+
+
+
+    SELECT *
+    FROM hr;
          
+
+
     
+
+
+
+
+
 
 - Changed column 'i>>?id to emp_id;
 
 
 
-         ALTER table hr
+         ALTER TABLE hr
          CHANGE COLUMN  ï>>¿id emp_id VARCHAR(20) NULL;
 
   
 
 - Using UPDATE and CASE, together with str_to_date() function to convert the str in the 'birthdate' column to a date value and also used date_format() to change the date format from '%m/%d/%Y' to '%Y-%m-%d'. Also I modified the 'birthdate' column data type from text to DATE. 
 
-  - ![005](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/681fe411-c204-4102-8485-5b58fa6cec77)
-  - 
-  - ![007](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/dec68792-a8cc-41e4-9b2f-04832e06042d)
+
+         UPDATE hr
+         SET birthdate = CASE
+             WHEN birthdate LIKE '%%' THEN date_format(str_to_date(birthdate, '%m/%d/%Y'), '%Y-%m-%d')
+             WHEN birthdate LIKE '%-%' THEN date_format(str_to_date(birthdate, '%m-%d-%Y'), '%Y-%m-%d')
+             ELSE NULL
+         END;
+
+   
+             
+
+          ALTER TABLE hr
+          MODIFY COLUMN birthdate DATE;
+
+
+
+          DESCRIBE hr;
+
+
+  
+         
 
  
 -  Using UPDATE and CASE, together with str_to_date() function to convert the str in the 'hire_date' column to a date value and also used date_format() to change the date format from '%m/%d/%Y' to '%Y-%m-%d'. Also I modified the 'hire_date' column data type from text to DATE.
 
-  -   ![008](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/9852d7c5-e6c2-4e58-90d7-146943b42bc1)
+
+
+          UPDATE hr
+          SET hire_date = CASE
+             WHEN hire_date LIKE '%%' THEN date_format(str_to_date(hire_date, '%m/%d/%Y'), '%Y-%m-%d')
+             WHEN hire_date LIKE '%-%' THEN date_format(str_to_date(hire_date, '%m-%d-%Y'), '%Y-%m-%d')
+             ELSE NULL
+          END;
+
+
+
+          ALTER TABLE hr
+          MODIFY COLUMN hire_date DATE;
+
+
+
+          DESCRIBE hr;
+
 
 
 -   Using UPDATE, IF, date(), str_to_date(), I removed the time aspect of DATETIME to only DATE and I also SET where termdate IS NOT NULL and is not empty to '0000-00-00'.
 
-  -   ![009](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/d527958d-b6f2-4806-a55d-5dff740a3c1d)
+
+
+        UPDATE hr
+        SET termdate = IF(termdate IS NOT NULL AND termdate != '', date(str_to_date(termdate, '%Y-%m-%d %H:%i:%s UTC')), '0000-00-00')
+        WHERE TRUE;
+
+
+        SET sql_mode = 'ALLOW_INVALID_DATES';
 
 
 - I did ALTER the table to include 'age' column and also calculate the difference in-between 'birthdate' and CURDATE() using the timestampdiff() function. I also used the DATE_SUB() with a 100year interval to change birthdate >= 2060 < 2070 to 1960 to 1970, thus clearing the minus error in age.  
 
-  -  ![012](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/8b610f4c-5630-4ed8-beb0-6c50fa63f7bb)
+
+
+          ALTER TABLE hr
+          ADD COLUMN age INT;
+
+
+
+
+          UPDATE hr
+          SET age = timestampdiff(YEAR, birthdate, CURDATE());
+
+
  
-  -  ![013](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/9a209192-6f7a-4b1b-9c77-99284b137df9)
+     
+ 
+          UPDATE hr
+          SET birthdate = DATE_SUB(birthdate, INTERVAL 100 YEAR)
+          WHERE birthdate >= '2060-01-01' AND birthdate < '2070-01-01';
+
+
+   
 
 
 
@@ -83,60 +161,196 @@ In the initial data preparation phase, I performed the following tasks;
 
    **1. What is the gender breakdown of employees in the company?**
 
-   - ![014](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/98c3cb46-981f-41a3-9be9-1f9ad4b484b1)
+
+                SELECT gender, count(*) AS Employees
+                FROM hr
+                WHERE termdate = '0000-00-00'
+                GROUP BY gender;
+                
      
 
-     **2. What is the race/ethnicity breakdown of employees in the company?**
+   **2. What is the race/ethnicity breakdown of employees in the company?**
     
-        - ![015](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/7740d00a-c96d-4588-aa8a-912d0d53010e)
+
+
+                SELECT race, count(*) AS Count
+                FROM hr
+                WHERE termdate = '0000-00-00'
+                GROUP BY race
+                ORDER BY count(*) DESC;
           
        
-     **3. What is the age distribution of employees in the company?**
+   **3. What is the age distribution of employees in the company?**
     
-        - ![016](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/a8798dc4-9ba3-407c-a459-fd0f37d1cc79)
-       
-        - ![017](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/3d38d47b-ee25-4a69-84ff-9fb3d9721101)
-
-       
-     **4. How many employees work at headquarters versus remote locations?**
-    
-        -  ![018](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/65cba034-253a-492f-b12b-d2500fbaa426)
-       
-       
-     **5. What is the average length of employment for employees who have been terminated?**
-    
-        - ![019](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/653f7bf0-3be5-47e0-9fde-b770ec1da28f)
-       
-       
-     **6. How does gender distribution vary across departments and job titles?**
-    
-        - ![020](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/df0c72c6-e767-4285-9e2e-a22c1ef8a6c9)
 
 
-     **7. What is the distribution of job titles across the company?**
+                SELECT 
+                    min(age) AS Youngest,
+                    max(age) AS Oldest
+                FROM hr
+                WHERE termdate = '0000-00-00';
+
+
+
+
+                SELECT 
+                    CASE
+                        WHEN age >= 21 AND age <= 34 THEN 'Millennial'
+                        WHEN age >= 35 AND age <= 50 THEn 'Genx'
+                        WHEN age >= 51 AND age <= 69 THEN 'Boomer'
+                        ELSE 'Silent'
+                    END AS age_group, gender, count(*) AS Count
+                FROM hr
+                WHERE termdate = '0000-00-00'
+                GROUP BY age_group, gender
+                ORDER BY age_group, gender;
+       
+                 
+
+       
+   **4. How many employees work at headquarters versus remote locations?**
     
-        - ![021](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/221d2cbe-74d1-4018-b930-5f371ceeade0)
+        
+
+                SELECT location, count(*) AS Count
+                FROM hr
+                WHERE termdate = '0000-00-00'
+                GROUP BY location
+                ORDER BY Count;
+
+                
+           
+       
+   **5. What is the average length of employment for employees who have been terminated?**
+    
+
+
+
+                SELECT round(avg(datediff(termdate, hire_date)) / 365, 2) AS avg_employment_period
+                FROM hr
+                WHERE termdate <= CURDATE() AND termdate <> '0000-00-00';
+
+
+                
+       
+       
+   **6. How does gender distribution vary across departments and job titles?**
+    
+
+
+
+                SELECT department, gender, count(*) AS count
+                FROM hr
+                WHERE termdate = '0000-00-00'
+                GROUP BY department, gender
+                ORDER BY department;
+
+                
+
+
+   **7. What is the distribution of job titles across the company?**
+    
+
+
+
+                SELECT jobtitle, count(*) AS Count
+                FROM hr
+                WHERE termdate = '0000-00-00'
+                GROUP BY jobtitle
+                ORDER BY jobtitle DESC;
+
+
+
+                
 
      
-     **8. Which department has the highest turnover rate?**
-    
-        -  ![022](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/0633512a-e0ba-4ece-9e5d-c51e8a36c18c)
+   **8. Which department has the highest turnover rate?**
+
+
+
+
+
+                SELECT department, total_count, terminated_count, terminated_count/total_count AS termination_rate
+                FROM(
+                     SELECT department,
+                     count(*) AS total_count,
+                     SUM(CASE WHEN termdate <> '0000-00-00' AND termdate <= CURDATE()
+                         THEN 1 ELSE 0 END) AS terminated_count
+                     FROM hr
+                     GROUP BY department) AS subquery
+                ORDER BY termination_rate DESC;
+
+
+
+                
+        
        
        
-     **9. What is the distribution of employees across locations by state?**
-    
-        -  ![023](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/6c3e7ca5-bc94-4189-9a5b-7d439a72bec6)
-
-
-     **10. How has the company's employee count changed over time based on hire and term dates?**
-    
-        -  ![024](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/8341325e-b1da-469d-bfa1-f09efbc54c4f)
+   **9. What is the distribution of employees across locations by state?**
     
 
-     **11.  What is the tenure ditribution for each department?**
-    
-        -  ![025](https://github.com/karanja-Muiruri/Human-Resource-Analysis/assets/169806532/af31265b-7de6-4242-940f-6917583d781f)
 
+
+                SELECT location_state, count(*) AS Count
+                FROM hr
+                WHERE termdate = '0000-00-00'
+                GROUP BY location_state
+                ORDER BY Count DESC;
+
+
+                
+
+
+   **10. How has the company's employee count changed over time based on hire and term dates?**
+    
+
+
+
+                SELECT year, hires, terminations, hires - terminations AS net_change, round((hires - terminations) / hires * 100, 2) AS net_change_precent
+                FROM(
+                     SELECT
+                          YEAR(hire_date) AS year, count(*) AS hires,
+                          SUM(CASE WHEN termdate <> '0000-00-00' AND termdate <= CURDATE()
+                              THEN 1 ELSE 0 END) AS terminations
+                     FROM hr
+                     GROUP BY YEAR(hire_date)
+                     ) AS subquery
+                ORDER BY year ASC;
+
+
+
+                
+                
+    
+
+   **11.  What is the tenure ditribution for each department?**
+    
+
+
+
+                SELECT department, round(avg(datediff(termdate, hire_date) / 365), 0) AS avg_tenure
+                FROM hr
+                WHERE termdate <= CURDATE() AND termdate <> '0000-00-00'
+                GROUP BY department;
+
+
+
+
+                
+        
+   ### FINDINGS:
+
+        1. There are more male employees than female or non-conforming employees
+        2. The genders are fairly evenly distributed across departments. There are slightly more male employees overall.
+        3. Employees 21-30 years old are the fewest in the company. Most employees are 31-50 years old. Surprisingly, the age group 50+ have the most employees in the                  company.
+        4. Caucasian employees are the majority in the company, followed by mixed race, black, Asian, Hispanic, and native Americans. 
+        5. The average length of employment is 7 years.
+        6. Auditing has the highest turnover rate, followed by Legal, Research & Development and Training. Business Development & Marketing have the lowest turnover                    rates.
+        7. Employees tend to stay with the company for 6-8 years. Tenure is quite evenly distributed across departments.
+        8. About 25% of employees work remotely.
+        9. Most employees are in Ohio (14,788) followed distantly by Pennsylvania (930) and Illinois (730), Indiana (572), Michigan (569), Kentucky (375) and Wisconsin                 (321).
+       10. There are 182 job titles in the company, with Research Assistant II taking most of the employees (634) and Assistant Professor, Marketing Manager, Office                    Assistant IV, Associate Professor and VP of Training and Development taking the just 1 employee each.
+       11. Employee hire counts have increased over the years.
 
 
 
